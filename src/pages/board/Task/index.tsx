@@ -1,31 +1,23 @@
-import BoardService, { IStage } from '@/services/board/board';
+import { notificationActions } from '@/redux/notification-slice';
+import { useAppDispatch } from '@/redux/store';
+import BoardService, { IOpportunities, IStage } from '@/services/board/board';
 import { useEffect, useState } from 'react';
-import { DragDropContext, Droppable, Draggable, DropResult } from 'react-beautiful-dnd';
+import { DragDropContext, Draggable, Droppable, DropResult } from 'react-beautiful-dnd';
 
-type Task = {
-    id: string;
-    content: string;
+type SortedColumnsType = {
+    [key: string]: IOpportunities[];
 };
 
 const Task = () => {
-    const initialColumns: { [key: string]: Task[] } = {
-        New: [
-            { id: 'task-1', content: 'Task 1' },
-            { id: 'task-2', content: 'Task 2' }
-        ],
-        QUALIFIED: [
-            { id: 'task-3', content: 'Task 3' },
-            { id: 'task-4', content: 'Task 4' }
-        ],
-        PROPOSITION: [],
-        WON: [],
-        LOST: []
-    };
+    const dispatch = useAppDispatch();
+
+    const initialColumns: { [key: string]: IOpportunities[] } = {};
 
     const [columns, setColumns] = useState(initialColumns);
     const [stages, setDataStages] = useState<IStage[]>([]);
+    const [opportunities, setDataOpportunities] = useState<IOpportunities[]>([]);
 
-    const handleDragEnd = (result: DropResult) => {
+    const handleDragEnd = async (result: DropResult) => {
         const { source, destination, draggableId } = result;
 
         // Nếu không có điểm đến hoặc nằm ở cùng một vị trí với điểm xuất phát, không làm gì
@@ -39,34 +31,57 @@ const Task = () => {
         const destColumn = newColumns[destination.droppableId];
         const [movedTask] = sourceColumn.splice(source.index, 1);
 
-        // Chèn task vào cột mới
+        // Chèn vào cột mới
         destColumn.splice(destination.index, 0, movedTask);
 
         // Cập nhật state với dữ liệu mới
         setColumns(newColumns);
 
-        console.log('columns', columns, 'sourceColumn', sourceColumn);
+        const movedOpportunity = opportunities.find(opportunity => opportunity.id === draggableId);
 
-        // try {
-        //     const response = await axios.post('your-api-endpoint', {
-        //         task: movedTask,
-        //         sourceColumnId: source.droppableId,
-        //         destinationColumnId: destination.droppableId
-        //     });
-        //     console.log('API response:', response.data);
-        // } catch (error) {
-        //     console.error('API error:', error);
-        // }
+        if (movedOpportunity) {
+            // Tạo dữ liệu mới
+            const dataFormatted = {
+                ...movedOpportunity, // Sử dụng toàn bộ dữ liệu từ movedOpportunity
+                stage: {
+                    id: destination.droppableId
+                }
+            };
+
+            try {
+                const res = await BoardService.updateBoard(dataFormatted as any);
+                if (res) dispatch(notificationActions.setNotification({ type: 'success', message: 'Move Successfully' }));
+            } catch (error) {
+                console.error('API error:', error);
+            }
+        } else {
+            console.error('Opportunity not found with ID:', draggableId);
+        }
     };
 
     useEffect(() => {
-        const getStageAPI = async () => {
-            const res = await BoardService.getStage();
+        const fetchData = async () => {
+            const [stagesRes, opportunitiesRes] = await Promise.all([BoardService.getStage(), BoardService.getOpportunities()]);
 
-            if (res) setDataStages(res);
+            if (stagesRes) setDataStages(stagesRes);
+            if (opportunitiesRes) setDataOpportunities(opportunitiesRes);
+
+            const newColumns = { ...initialColumns };
+
+            opportunitiesRes.forEach(opportunity => {
+                const stageName = opportunity.stage.name;
+                newColumns[stageName] = [...(newColumns[stageName] || []), opportunity];
+            });
+
+            const sortedColumns: SortedColumnsType = {};
+            stagesRes.forEach(stage => {
+                sortedColumns[stage.id] = newColumns[stage.name] || [];
+            });
+
+            setColumns(sortedColumns);
         };
 
-        getStageAPI();
+        fetchData();
     }, []);
 
     return (
@@ -74,7 +89,7 @@ const Task = () => {
             <div style={{ display: 'flex' }}>
                 {Object.entries(columns).map(([columnId, tasks]) => (
                     <div key={columnId} style={{ margin: 8 }}>
-                        <h2>{columnId}</h2>
+                        <h2>{stages.find(stage => stage.id === columnId)?.name}</h2>
                         <Droppable droppableId={columnId}>
                             {(provided: any) => (
                                 <div
@@ -97,7 +112,7 @@ const Task = () => {
                                                         ...provided.draggableProps.style
                                                     }}
                                                 >
-                                                    {task.content}
+                                                    {task.company}
                                                 </div>
                                             )}
                                         </Draggable>
