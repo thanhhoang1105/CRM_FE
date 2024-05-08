@@ -1,0 +1,136 @@
+.ant-table-wrapper {
+    .ant-table {
+        scrollbar-color: unset;
+
+        .ant-table-container {
+            /* Table header */
+            table thead {
+                tr th {
+                    padding: 9px 16px;
+                    font-weight: 500;
+                    text-wrap: nowrap;
+                    color: $color-black;
+
+                    /* Sorter */
+                    .ant-table-column-sorter * {
+                        font-size: 8px;
+                    }
+
+                    /* Fixed right */
+                    &.ant-table-cell-fix-right {
+                        text-align: center;
+                    }
+                }
+            }
+
+            table tbody {
+                tr {
+                    td {
+                        padding: 9px 16px;
+                        font-weight: 400;
+                        color: $color-black;
+                        border-color: transparent;
+
+                        /* Full name */
+                        .full-name {
+                            position: relative;
+                            text-transform: uppercase;
+                            font-weight: 500;
+                            width: fit-content;
+                            display: block;
+
+                            /* Full name underline */
+                            &::after {
+                                content: '';
+                                position: absolute;
+                                bottom: -2px;
+                                left: 0;
+                                display: block;
+                                width: 100%;
+                                height: 1px;
+                                background: currentColor;
+                                transform: scaleX(0);
+                                transform-origin: bottom right;
+                                transition: transform 0.5s ease-out;
+                            }
+
+                            &:hover {
+                                &::after {
+                                    transform: scaleX(1);
+                                    transform-origin: bottom left;
+                                }
+                            }
+                        }
+
+                        /* View attachment */
+                        .view-attachment {
+                            color: $color-primary;
+                            font-size: 14px;
+                            font-weight: 600;
+                        }
+                    }
+
+                    /* Table row white */
+                    &.table-row-white {
+                        td {
+                            background-color: white;
+                        }
+                    }
+
+                    /* Table row dark */
+                    &.table-row-dark {
+                        td {
+                            background-color: $color-row-table;
+                        }
+                    }
+                }
+            }
+
+            .ant-table-cell-row-hover {
+                background-color: #ccc !important;
+            }
+        }
+
+        /* Bordered */
+        &.ant-table-bordered {
+            .ant-table-container table tbody {
+                tr {
+                    td {
+                        border-bottom: 1px solid #f0f0f0;
+                    }
+                }
+            }
+        }
+
+        /* Empty */
+        &.ant-table-empty {
+            .ant-table-container .ant-table-body {
+                overflow-y: hidden !important;
+            }
+        }
+
+        .ant-table-cell-scrollbar {
+            background-color: #fff;
+            border: none;
+        }
+    }
+
+    // Header bordered
+    &.table-header-bordered {
+        .ant-table {
+            .ant-table-container {
+                table thead {
+                    tr {
+                        th {
+                            border: 1px solid #f0f0f0;
+
+                            &::before {
+                                display: none;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+}

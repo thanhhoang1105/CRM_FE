@@ -1,0 +1,20 @@
+@mixin flex-box--default($align: flex-start, $justify: flex-start, $flow: row nowrap) {
+    display: flex;
+    align-items: $align;
+    justify-content: $justify;
+    flex-flow: $flow;
+}
+
+@mixin txt-styles($size: 14px, $f-weight: 400, $color: $txt-default, $line-h: 140%) {
+    font-size: $size;
+    font-weight: $f-weight;
+    color: $color;
+    line-height: $line-h;
+    font-style: normal;
+}
+
+@mixin tag-color($color: $txt-success, $bg-color: $bg-success, $border-color: $txt-success) {
+    color: $color;
+    background-color: $bg-color;
+    border-color: $border-color;
+}
