@@ -12,8 +12,16 @@ const headerMenu: HeaderMenu[] = [
         label: pathnames.boardManagement.main.name
     },
     {
-        url: '/employee-transfer',
-        label: 'Employee transfer'
+        url: '/opportunity-management',
+        label: 'Opportunity'
+    },
+    {
+        url: '/contact-management',
+        label: 'Contact'
+    },
+    {
+        url: '/user-management',
+        label: 'User'
     }
 ];
 

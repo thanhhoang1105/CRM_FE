@@ -22,6 +22,14 @@
     color: $color-red;
 }
 
+.required {
+    @include txt-styles(14px, 400, $color-red);
+}
+
+.text-area-item {
+    max-height: 250px;
+}
+
 // Layout Detail Page
 .layout-detail {
     position: relative;

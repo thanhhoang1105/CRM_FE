@@ -3,8 +3,14 @@ const main = {
     path: '/board-management'
 };
 
+const edit = {
+    name: 'Board edit',
+    path: '/board-edit'
+};
+
 const boardManagement = {
-    main
+    main,
+    edit
 };
 
 export default boardManagement;

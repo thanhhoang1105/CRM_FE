@@ -1,9 +1,8 @@
 import { Select, Table } from 'antd';
 import { AnyObject } from 'antd/es/_util/type';
 import { TableProps } from 'antd/es/table';
-import { TableLocale, TablePaginationConfig } from 'antd/es/table/interface';
+import { TablePaginationConfig } from 'antd/es/table/interface';
 import { useState } from 'react';
-import EmptyBox from '../empty-box';
 
 export interface IBaseTableProps<T> extends TableProps<T> {
     dataSource?: T[];
@@ -11,15 +10,12 @@ export interface IBaseTableProps<T> extends TableProps<T> {
 }
 
 const BaseTable = <T extends AnyObject>(props: IBaseTableProps<T>) => {
-    const { scroll: scrollProp, locale: localeProp, rowClassName: rowClassNameProp, pagination: paginationProp, ...otherProps } = props;
+    const { scroll: scrollProp, rowClassName: rowClassNameProp, pagination: paginationProp, ...otherProps } = props;
     const totalItems = props.dataSource?.length;
 
-    // Locale
-    const localeDefault: TableLocale = { emptyText: <EmptyBox loading={false} imageSize={120} minHeight={400} /> };
-    const locale = localeProp ?? localeDefault;
-
     // Scroll
-    const scrollDefault = { x: 'max-content', y: 400 };
+    const scrollDefault = props.dataSource && props.dataSource.length < 10 ? { x: 'max-content' } : { x: 'max-content', y: 400 };
+
     const scroll = scrollProp ?? scrollDefault;
 
     // Row class name
@@ -51,7 +47,7 @@ const BaseTable = <T extends AnyObject>(props: IBaseTableProps<T>) => {
     };
     const pagination = paginationProp ?? defaultPagination;
 
-    return <Table {...otherProps} pagination={pagination} scroll={scroll} locale={locale} showSorterTooltip={false} rowClassName={rowClassName} />;
+    return <Table {...otherProps} pagination={pagination} scroll={scroll} showSorterTooltip={false} rowClassName={rowClassName} />;
 };
 
 export default BaseTable;
