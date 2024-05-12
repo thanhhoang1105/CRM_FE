@@ -111,10 +111,6 @@ const BoardEdit = () => {
             children: 'Send mail'
         },
         {
-            onClick: () => console.log('edit'),
-            children: 'Activity'
-        },
-        {
             onClick: () => setIsShowModalEditSalesperson(true),
             children: 'Edit salesperson',
             hidden: !roleAdmin
@@ -194,7 +190,7 @@ const BoardEdit = () => {
         {
             label: 'Customer',
             value: (
-                <Form.Item name="customer" valuePropName="checked">
+                <Form.Item name="customer" valuePropName="checked" className="switch-item">
                     <Switch />
                 </Form.Item>
             )
@@ -202,7 +198,7 @@ const BoardEdit = () => {
         {
             name: 'priority',
             label: 'Priority',
-            value: <Rate count={3} tooltips={['MEDIUM', 'HIGHT', 'VERY HIGHT']} />
+            value: <Rate count={3} tooltips={['MEDIUM', 'HIGHT', 'VERY HIGHT']} className="checkbox-container" />
         },
         {
             name: 'stage',
@@ -285,6 +281,7 @@ const BoardEdit = () => {
                 <ActivitiesInBoardEdit id={id} />
             </div>
 
+            {/* Dialog edit salesperson */}
             <DialogHaveField
                 form={formEditSalesperson}
                 title="Edit salesperson"

@@ -12,8 +12,8 @@ export interface IActivities {
     fullname: string;
     type: string;
     summary: string;
-    detail: string;
     date: string;
+    detail: string;
     done: boolean;
 }
 
@@ -30,6 +30,15 @@ const ActivitiesService = {
     getListActivitiesByOpportunitiesId: (id: string): Promise<ISchedule> => {
         const url = apiActivities + `/auto/${id}`;
         return axiosClient.get(url);
+    },
+
+    addNewActivities: (id: string, params: IActivities): Promise<IActivities> => {
+        const url = apiActivities + `/opportunity/${id}`;
+        return axiosClient.post(url, params);
+    },
+    updateActivities: (params: IActivities): Promise<IActivities> => {
+        const url = apiActivities + `/${params.id}`;
+        return axiosClient.put(url, params);
     }
 };
 

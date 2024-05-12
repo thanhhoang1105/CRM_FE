@@ -27,14 +27,14 @@ const ContactInBoardEdit = (props: IContactInBoardEditProps) => {
 
     const [dataContacts, setDataContacts] = useState<IContacts[]>([]);
     const [dataEditContacts, setDataEditContacts] = useState<IContacts>();
-    const [isShowModalAddContact, setIsShowModalAddContact] = useState<boolean>(false);
+    const [isShowModalAdd, setIsShowModal] = useState<boolean>(false);
     const [isReload, setIsReload] = useState<number>(0);
 
     //#region render table contact
     const handleEditContact = (dataEdit: IContacts) => {
-        console.log('dataEdit', dataEdit);
+        setIsShowModal(true);
         setDataEditContacts(dataEdit);
-        setIsShowModalAddContact(true);
+        formAddContact.setFieldsValue({ ...dataEdit, birthday: dayjs(dataEdit.birthday, TIME_FORMAT.DATE) });
     };
 
     // định nghĩa các cột sẽ render ra Table
@@ -86,7 +86,7 @@ const ContactInBoardEdit = (props: IContactInBoardEditProps) => {
             value: 'Other'
         }
     ];
-    // Field add and edit project
+
     const fieldAddContacts: IField[] = [
         {
             name: 'firstname',
@@ -133,8 +133,8 @@ const ContactInBoardEdit = (props: IContactInBoardEditProps) => {
         {
             name: 'jobPosition',
             label: 'Job position',
-            value: <Input placeholder="Enter job position" />
-            // validation: [{ required: true, message: 'Please enter the valid value' }]
+            value: <Input placeholder="Enter job position" />,
+            validation: [{ required: true, message: 'Please enter the valid value' }]
         }
     ];
 
@@ -145,7 +145,7 @@ const ContactInBoardEdit = (props: IContactInBoardEditProps) => {
         try {
             const res = await ContactsService.addNewContact(dataFormatted);
             if (res) {
-                setIsShowModalAddContact(false);
+                setIsShowModal(false);
                 dispatch(notificationActions.setNotification({ type: 'success', message: 'Add contact successfully' }));
                 setIsReload(isReload + 1);
             }
@@ -161,7 +161,7 @@ const ContactInBoardEdit = (props: IContactInBoardEditProps) => {
         try {
             const res = await ContactsService.updateContact(dataFormatted);
             if (res) {
-                setIsShowModalAddContact(false);
+                setIsShowModal(false);
                 dispatch(notificationActions.setNotification({ type: 'success', message: 'Update contact successfully' }));
                 setIsReload(isReload + 1);
             }
@@ -179,7 +179,7 @@ const ContactInBoardEdit = (props: IContactInBoardEditProps) => {
     };
 
     const handleCancelSubmitAddContact = () => {
-        setIsShowModalAddContact(false);
+        setIsShowModal(false);
         setDataEditContacts(undefined);
     };
 
@@ -194,13 +194,6 @@ const ContactInBoardEdit = (props: IContactInBoardEditProps) => {
         getDataDetail();
     }, [id, isReload]);
 
-    // fill data for form
-    useEffect(() => {
-        if (dataEditContacts) {
-            formAddContact.setFieldsValue({ ...dataEditContacts, birthday: dayjs(dataEditContacts.birthday, TIME_FORMAT.DATE) });
-        }
-    }, [dataEditContacts, formAddContact]);
-
     return (
         <>
             <DetailInfo title="Contacts">
@@ -208,7 +201,7 @@ const ContactInBoardEdit = (props: IContactInBoardEditProps) => {
                     title=""
                     dataSource={formatDataTable(dataContacts)}
                     columns={columnContacts}
-                    handleAdd={() => setIsShowModalAddContact(true)}
+                    handleAdd={() => setIsShowModal(true)}
                     tableScroll={dataContacts.length > 10 ? { x: 'max-content', y: 200 } : { x: 'max-content' }}
                 />
             </DetailInfo>
@@ -217,7 +210,7 @@ const ContactInBoardEdit = (props: IContactInBoardEditProps) => {
             <DialogHaveField
                 form={formAddContact}
                 title={dataEditContacts ? 'Edit contacts' : 'Add contact'}
-                isShow={isShowModalAddContact}
+                isShow={isShowModalAdd}
                 onCancel={handleCancelSubmitAddContact}
                 data={fieldAddContacts}
                 handleSubmit={handleSubmit}

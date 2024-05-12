@@ -79,9 +79,15 @@
                     }
 
                     /* Table row dark */
+                    &.table-row-light {
+                        td {
+                            background-color: #f2f2f2;
+                        }
+                    }
+
                     &.table-row-dark {
                         td {
-                            background-color: $color-row-table;
+                            background-color: #e4e4e4;
                         }
                     }
                 }

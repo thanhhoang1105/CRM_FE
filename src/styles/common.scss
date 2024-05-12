@@ -180,6 +180,13 @@
     }
 }
 
+.switch-item {
+    .ant-col {
+        display: flex;
+        justify-content: center;
+    }
+}
+
 // Tab
 .tabs-detail {
     > .ant-tabs-nav {

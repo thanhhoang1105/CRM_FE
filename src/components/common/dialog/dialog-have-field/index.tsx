@@ -11,10 +11,11 @@ interface IDialogAddCommonProps<T> {
     onCancel: () => void;
     data: T[];
     handleSubmit: (data: any) => void;
+    renderColumn?: number;
 }
 
 const DialogHaveField = <T extends Record<string, any>>(props: IDialogAddCommonProps<T>) => {
-    const { form, name, title, isShow, onCancel, handleSubmit, data, ...otherProps } = props;
+    const { form, name, title, isShow, onCancel, handleSubmit, data, renderColumn = 4, ...otherProps } = props;
 
     // Submit form reset field
     const onFinish = (values: any) => {
@@ -30,15 +31,19 @@ const DialogHaveField = <T extends Record<string, any>>(props: IDialogAddCommonP
 
     const renderContent = () => {
         const rows = [];
-        for (let i = 0; i < data.length; i += 4) {
-            const rowData = data.slice(i, i + 4);
+        for (let i = 0; i < data.length; i += renderColumn) {
+            const rowData = data.slice(i, i + renderColumn);
 
             const formItems = rowData.map((item: any, index: number) => {
-                const { name, label, value, validation, col = 6 } = item;
+                const { name, label, value, validation, colSpan = 6, hidden } = item;
+
+                if (hidden) {
+                    return null;
+                }
 
                 return (
-                    <Col span={col} key={index}>
-                        <Form.Item name={name} label={label} rules={validation} className="dialog-information__item">
+                    <Col span={colSpan} key={index}>
+                        <Form.Item name={name} label={label} rules={validation} className="dialog-information__item w-100">
                             {value}
                         </Form.Item>
                     </Col>
