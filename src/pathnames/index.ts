@@ -1,4 +1,5 @@
 import boardManagement from './board-management';
+import contactManagement from './contact-management';
 import opportunityManagement from './opportunity-management';
 import { getPathnames } from './use-pathnames';
 
@@ -16,7 +17,8 @@ const pathnamesBase = {
         path: '/login'
     },
     boardManagement,
-    opportunityManagement
+    opportunityManagement,
+    contactManagement
 };
 
 const pathnames = getPathnames(pathnamesBase) as typeof pathnamesBase;

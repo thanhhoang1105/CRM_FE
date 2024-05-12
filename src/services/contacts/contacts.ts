@@ -15,6 +15,10 @@ export interface IContacts {
 const apiURL = '/contacts';
 
 const ContactsService = {
+    getListAllContact: (): Promise<IContacts[]> => {
+        const url = apiURL + `/all`;
+        return axiosClient.get(url);
+    },
     // gọi API lấy ra dữ liệu chi tiết của contact theo opportunities id
     getListContactsByOpportunitiesId: (id: string): Promise<IContacts[]> => {
         const url = apiURL + `/opportunity/${id}`;
