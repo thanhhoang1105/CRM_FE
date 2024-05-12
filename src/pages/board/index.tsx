@@ -20,7 +20,7 @@ const BoardManagement = () => {
 
     const [columns, setColumns] = useState(initialColumns);
     const [dataStages, setDataStages] = useState<IStage[]>([]);
-    const [opportunities, setDataOpportunities] = useState<IOpportunities[]>([]);
+    const [dataOpportunities, setDataOpportunities] = useState<IOpportunities[]>([]);
 
     const handleDragEnd = async (result: DropResult) => {
         const { source, destination, draggableId } = result;
@@ -42,7 +42,7 @@ const BoardManagement = () => {
         // Cập nhật state với dữ liệu mới
         setColumns(newColumns);
 
-        const movedOpportunity = opportunities.find(opportunity => opportunity.id === draggableId);
+        const movedOpportunity = dataOpportunities.find(opportunity => opportunity.id === draggableId);
 
         if (movedOpportunity) {
             // Tạo dữ liệu mới

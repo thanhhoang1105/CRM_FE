@@ -11,7 +11,7 @@ export interface IActivitiesInBoardEditProps {
     id: string;
 }
 
-const ActivitiesInBoardEdit = (props: IActivitiesInBoardEditProps) => {
+const ActivitiesEdit = (props: IActivitiesInBoardEditProps) => {
     const { id } = props;
     const [dataActivities, setDataActivities] = useState<ISchedule>();
 
@@ -58,4 +58,4 @@ const ActivitiesInBoardEdit = (props: IActivitiesInBoardEditProps) => {
     );
 };
 
-export default ActivitiesInBoardEdit;
+export default ActivitiesEdit;

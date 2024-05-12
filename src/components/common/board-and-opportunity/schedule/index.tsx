@@ -1,5 +1,6 @@
 import BaseDatePicker from '@/components/common/date-picker';
 import DetailInfo from '@/components/common/detail-common/detail-info';
+import DialogCommon from '@/components/common/dialog/dialog-common/dialog-common';
 import DialogHaveField from '@/components/common/dialog/dialog-have-field';
 import ButtonsIcon from '@/components/common/table/buttons-icon';
 import { renderBooleanStatus } from '@/components/common/table/render-boolean-status';
@@ -20,15 +21,25 @@ export interface IScheduleInBoardEditProps {
     id: string;
 }
 
-const ScheduleInBoardEdit = (props: IScheduleInBoardEditProps) => {
+const ScheduleEdit = (props: IScheduleInBoardEditProps) => {
     const { id } = props;
     const [formAddActivities] = Form.useForm();
     const dispatch = useAppDispatch();
 
     const [dataSchedule, setDataSchedule] = useState<ISchedule>();
     const [dataEditActivities, setDataEditActivities] = useState<IActivities>();
+    const [dataDeleteSchedule, setDataDeleteSchedule] = useState<IActivities>();
     const [isShowModal, setIsShowModal] = useState<boolean>(false);
+    const [isShowDeleteModal, setIsShowDeleteModal] = useState<boolean>(false);
     const [isReload, setIsReload] = useState<number>(0);
+
+    const deleteModalContent = (
+        <>
+            The schedule of&nbsp;
+            <b>{dataDeleteSchedule?.fullname}</b>
+            &nbsp;will be deleted. Are you sure you want to delete it?
+        </>
+    );
 
     //#region render table schedule
     const handleEditSchedule = (dataEdit: IActivities) => {
@@ -39,6 +50,7 @@ const ScheduleInBoardEdit = (props: IScheduleInBoardEditProps) => {
 
     const handleDeleteSchedule = (dataDelete: IActivities) => {
         console.log('handleDeleteSchedule', dataDelete);
+        setDataDeleteSchedule(dataDelete);
     };
 
     // định nghĩa các cột sẽ render ra Table
@@ -174,6 +186,12 @@ const ScheduleInBoardEdit = (props: IScheduleInBoardEditProps) => {
         setIsShowModal(false);
         setDataEditActivities(undefined);
     };
+
+    const handleSubmitDelete = () => {};
+
+    const onCloseDeleteModal = () => {
+        setIsShowDeleteModal(false);
+    };
     //#endregion
 
     useEffect(() => {
@@ -208,8 +226,20 @@ const ScheduleInBoardEdit = (props: IScheduleInBoardEditProps) => {
                 handleSubmit={handleSubmit}
                 renderColumn={dataEditActivities ? 4 : 2}
             />
+
+            {/* Dialog add contacts */}
+            <DialogCommon
+                open={isShowDeleteModal}
+                onClose={onCloseDeleteModal}
+                icon={icons.dialog.delete}
+                title="Delete employee"
+                content={deleteModalContent}
+                buttonType="default-danger"
+                buttonLeftClick={onCloseDeleteModal}
+                buttonRightClick={handleSubmitDelete}
+            />
         </>
     );
 };
 
-export default ScheduleInBoardEdit;
+export default ScheduleEdit;

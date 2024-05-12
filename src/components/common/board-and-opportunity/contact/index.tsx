@@ -20,7 +20,7 @@ export interface IContactInBoardEditProps {
     id: string;
 }
 
-const ContactInBoardEdit = (props: IContactInBoardEditProps) => {
+const ContactEdit = (props: IContactInBoardEditProps) => {
     const { id } = props;
     const [formAddContact] = Form.useForm();
     const dispatch = useAppDispatch();
@@ -219,4 +219,4 @@ const ContactInBoardEdit = (props: IContactInBoardEditProps) => {
     );
 };
 
-export default ContactInBoardEdit;
+export default ContactEdit;

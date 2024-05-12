@@ -19,6 +19,4 @@ const boardManagementRoute: IRoute[] = [
     }
 ];
 
-const hrManagementRoutes: IRoute[] = [...boardManagementRoute];
-
-export default hrManagementRoutes;
+export default boardManagementRoute;

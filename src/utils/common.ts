@@ -1,5 +1,6 @@
 import dayjs, { Dayjs } from 'dayjs';
 import { TIME_FORMAT } from './constants';
+import { ReactNode } from 'react';
 const today = dayjs();
 
 // Validate work email
@@ -177,19 +178,15 @@ export const formatMappingKey = (key: string) => {
 const greenStatus = { colorText: '#00A811', colorBr: '#00A811', colorBg: '#E6F6E7' };
 const redStatus = { colorText: '#EA4343', colorBr: '#EA4343', colorBg: '#FDECEC' };
 const yellowStatus = { colorText: '#E66F00', colorBr: '#E66F00', colorBg: '#FDF1E6' };
-const grayStatus = { colorText: '#767676', colorBr: '#767676', colorBg: '#f1f1f1' };
 const blueStatus = { colorText: '#1E6D98', colorBr: '#1E6D98', colorBg: '#EAF5FB' };
 const lightBlueStatus = { colorText: '#01BAD3', colorBr: '#01BAD3', colorBg: '#EEFDFF' };
 
 export const statusMapping: { [key: string]: { colorText: string; colorBr: string; colorBg: string } } = {
-    approved: greenStatus,
-    rejected: redStatus,
-    pending: yellowStatus,
-    reviewing: yellowStatus,
-    working: greenStatus,
-    leave: grayStatus,
-    fulltime: blueStatus,
-    parttime: lightBlueStatus,
-    active: greenStatus,
-    inactive: grayStatus
+    proposition: greenStatus,
+    lost: redStatus,
+    won: yellowStatus,
+    new: blueStatus,
+    qualified: lightBlueStatus
 };
+
+export const renderWithFallback = (data: ReactNode, fallback: string = '-') => (data !== '' && data !== null && data !== undefined ? data : fallback);

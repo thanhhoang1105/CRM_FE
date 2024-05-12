@@ -1,6 +1,16 @@
 import { FormRule } from 'antd';
 import { ReactNode } from 'react';
 
+export interface IInfoSection {
+    title?: string | undefined;
+    columns: IField[];
+}
+
+export interface IOption {
+    label: string;
+    value: string | number;
+}
+
 export interface IDataBreadcrumb {
     title: string;
     href?: string;
