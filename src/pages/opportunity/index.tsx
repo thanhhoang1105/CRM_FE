@@ -24,18 +24,11 @@ const OpportunityManagement = () => {
 
     const [dataOpportunities, setDataOpportunities] = useState<IOpportunities[]>([]);
     const [dataStages, setDataStages] = useState<IStage[]>([]);
-    const [dataDeleteOpportunity, setDataDeleteOpportunity] = useState<IOpportunities>();
     const [isShowModal, setIsShowModal] = useState<boolean>(false);
-    const [isShowModalDelete, setIsShowModalDelete] = useState<boolean>(false);
     const [isShowModalImport, setIsShowModalImport] = useState<boolean>(false);
     const [isReload, setIsReload] = useState<number>(0);
 
     //#region render table
-    const handleDeleteOpportunity = (dataDelete: IOpportunities) => {
-        console.log('dataDelete', dataDelete);
-        setDataDeleteOpportunity(dataDelete);
-        setIsShowModalDelete(true);
-    };
 
     // định nghĩa các cột sẽ render ra Table
     const columnOpportunity: ColumnsType<IOpportunities> = [
@@ -89,12 +82,6 @@ const OpportunityManagement = () => {
                             icon: icons.tableAction.edit,
                             link: pathnames.opportunityManagement.edit.path + `/${record.id}`,
                             tooltip: 'Edit',
-                            placement: 'top'
-                        },
-                        {
-                            icon: icons.tableAction.delete,
-                            onClick: () => handleDeleteOpportunity(record),
-                            tooltip: 'Delete',
                             placement: 'top'
                         }
                     ]}
