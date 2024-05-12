@@ -12,24 +12,24 @@ export interface IContacts {
     jobPosition: string;
 }
 
-const apiContacts = '/contacts';
+const apiURL = '/contacts';
 
 const ContactsService = {
     // gọi API lấy ra dữ liệu chi tiết của contact theo opportunities id
     getListContactsByOpportunitiesId: (id: string): Promise<IContacts[]> => {
-        const url = apiContacts + `/opportunity/${id}`;
+        const url = apiURL + `/opportunity/${id}`;
         return axiosClient.get(url);
     },
 
     // create new contact
     addNewContact: (params: IContacts): Promise<IContacts> => {
-        const url = apiContacts + `/opportunity/${params.id}`;
+        const url = apiURL + `/opportunity/${params.id}`;
         return axiosClient.post(url, params);
     },
 
     // update contact
     updateContact: (params: IContacts): Promise<IContacts> => {
-        const url = apiContacts + `/${params.id}`;
+        const url = apiURL + `/${params.id}`;
         return axiosClient.put(url, params);
     }
 };

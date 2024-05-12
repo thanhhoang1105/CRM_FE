@@ -51,6 +51,7 @@ const ScheduleEdit = (props: IScheduleInBoardEditProps) => {
     const handleDeleteSchedule = (dataDelete: IActivities) => {
         console.log('handleDeleteSchedule', dataDelete);
         setDataDeleteSchedule(dataDelete);
+        setIsShowDeleteModal(true);
     };
 
     // định nghĩa các cột sẽ render ra Table
@@ -227,12 +228,12 @@ const ScheduleEdit = (props: IScheduleInBoardEditProps) => {
                 renderColumn={dataEditActivities ? 4 : 2}
             />
 
-            {/* Dialog add contacts */}
+            {/* Dialog delete*/}
             <DialogCommon
                 open={isShowDeleteModal}
                 onClose={onCloseDeleteModal}
                 icon={icons.dialog.delete}
-                title="Delete employee"
+                title="Delete schedule activities"
                 content={deleteModalContent}
                 buttonType="default-danger"
                 buttonLeftClick={onCloseDeleteModal}

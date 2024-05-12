@@ -1,5 +1,5 @@
 import BaseTable from '@/components/common/table/table';
-import { Button } from 'antd';
+import { Button, ButtonProps, Flex } from 'antd';
 import './index.scss';
 import { ColumnsType } from 'antd/es/table';
 
@@ -12,21 +12,33 @@ interface ITableEducationProps<T> {
     handleAdd?: () => void;
     disabled?: boolean;
     bordered?: boolean;
+    moreButton?: ButtonProps[];
 }
 
 const TableHaveAdd = <T extends object>(props: ITableEducationProps<T>) => {
-    const { title, dataSource, rowKey, columns, tableScroll, handleAdd, disabled, bordered = false } = props;
+    const { title, dataSource, rowKey, columns, tableScroll, handleAdd, disabled, bordered = false, moreButton = [] } = props;
+
+    const renderButtons = () => {
+        return moreButton?.map((button, index) => {
+            const key = Math.floor(Math.random() * 10000) + '-' + index;
+
+            return <Button className="btn" {...button} key={key}></Button>;
+        });
+    };
 
     return (
         <div className="table-container">
             <div className="content-header">
                 <h3 className="title">{title}</h3>
-                {handleAdd && (
-                    <Button className="btn" type="text" onClick={handleAdd} disabled={disabled}>
-                        <img src="/media/icons/plus.svg" alt="plus.svg" />
-                        <span>Add</span>
-                    </Button>
-                )}
+                <Flex gap={12}>
+                    {moreButton && renderButtons()}
+                    {handleAdd && (
+                        <Button className="btn" type="text" onClick={handleAdd} disabled={disabled}>
+                            <img src="/media/icons/plus.svg" alt="plus.svg" />
+                            <span>Add</span>
+                        </Button>
+                    )}
+                </Flex>
             </div>
             <div className="content-body">
                 <BaseTable

@@ -15,12 +15,12 @@ export interface IListAllUser {
     avatar: IAvatar;
 }
 
-const apiUsers = '/users';
+const apiURL = '/users';
 
 const UsersService = {
     // gọi API lấy ra dữ liệu list user
     getListAllUser: (): Promise<IListAllUser[]> => {
-        const url = apiUsers + '/all';
+        const url = apiURL + '/all';
         return axiosClient.get(url);
     }
 };

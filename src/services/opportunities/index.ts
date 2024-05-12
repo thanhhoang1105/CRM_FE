@@ -41,30 +41,34 @@ export interface IAvatar {
     physicalPath: string;
 }
 
-const apiOpportunities = '/opportunities';
+const apiURL = '/opportunities';
 
 const OpportunitiesService = {
     // gọi API lấy ra Opportunities
     getOpportunities: (): Promise<IOpportunities[]> => {
-        const url = apiOpportunities + '/all';
+        const url = apiURL + '/all';
         return axiosClient.get(url);
     },
 
     // gọi API lấy ra dữ liệu chi tiết theo id
-    getOpportunitiesDetail: (id: string): Promise<IOpportunities> => {
-        const url = apiOpportunities + `/${id}`;
+    getOpportunityDetail: (id: string): Promise<IOpportunities> => {
+        const url = apiURL + `/${id}`;
         return axiosClient.get(url);
     },
 
+    addNewOpportunity: (params: IOpportunities): Promise<IOpportunities> => {
+        const url = apiURL;
+        return axiosClient.post(url, params);
+    },
     // API cập nhật lại vị trí và thông tin chi tiết của Opportunities
     updateBoard: (params: IOpportunities): Promise<IOpportunities> => {
-        const url = apiOpportunities + `/${params.id}?stageId=${params.stage.id}`;
+        const url = apiURL + `/${params.id}?stageId=${params.stage.id}`;
         return axiosClient.put(url, params);
     },
 
     // API cập nhật lại salesperson
     updateSalesperson: (opportunityId: string, salespersonId: string): Promise<IOpportunities> => {
-        const url = apiOpportunities + `/${opportunityId}/salesperson/${salespersonId}`;
+        const url = apiURL + `/${opportunityId}/salesperson/${salespersonId}`;
         return axiosClient.put(url);
     }
 };

@@ -228,7 +228,7 @@ const BoardAndOpportunity = (props: IBoardAndOpportunityProps) => {
         const getDataDetail = async () => {
             const [stagesRes, opportunitiesDetailRes, listUserRes] = await Promise.all([
                 StageService.getStage(),
-                OpportunitiesService.getOpportunitiesDetail(id),
+                OpportunitiesService.getOpportunityDetail(id),
                 UsersService.getListAllUser()
             ]);
 

@@ -17,27 +17,27 @@ export interface IActivities {
     done: boolean;
 }
 
-const apiActivities = '/activities';
+const apiURL = '/activities';
 
 const ActivitiesService = {
     // gọi API lấy ra dữ liệu của activities theo opportunities id
     getListScheduleByOpportunitiesId: (id: string): Promise<ISchedule> => {
-        const url = apiActivities + `/schedule/${id}`;
+        const url = apiURL + `/schedule/${id}`;
         return axiosClient.get(url);
     },
 
     // gọi API lấy ra dữ liệu của activities theo opportunities id
     getListActivitiesByOpportunitiesId: (id: string): Promise<ISchedule> => {
-        const url = apiActivities + `/auto/${id}`;
+        const url = apiURL + `/auto/${id}`;
         return axiosClient.get(url);
     },
 
     addNewActivities: (id: string, params: IActivities): Promise<IActivities> => {
-        const url = apiActivities + `/opportunity/${id}`;
+        const url = apiURL + `/opportunity/${id}`;
         return axiosClient.post(url, params);
     },
     updateActivities: (params: IActivities): Promise<IActivities> => {
-        const url = apiActivities + `/${params.id}`;
+        const url = apiURL + `/${params.id}`;
         return axiosClient.put(url, params);
     }
 };

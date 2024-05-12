@@ -1,7 +1,5 @@
 import axiosClient from '../axios-client';
 
-const apiStages = '/stages';
-
 export interface IStage {
     id: string;
     name: string;
@@ -9,10 +7,12 @@ export interface IStage {
     code: number;
 }
 
+const apiURL = '/stages';
+
 const StageService = {
     // gọi API lấy ra Stage
     getStage: (): Promise<IStage[]> => {
-        const url = apiStages + '/all';
+        const url = apiURL + '/all';
         return axiosClient.get(url);
     }
 };
