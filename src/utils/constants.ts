@@ -4,4 +4,27 @@ export const TIME_FORMAT = {
     ISO: 'YYYY-MM-DDTHH:mm:ss'
 };
 
-export const DEFAULT_NUMERIC_FORMAT = "_( #,##0.00_);_( -#,##0.00;_(* '-'??_);_(@_)";
+export const optionGenders = [
+    {
+        label: 'Male',
+        value: 'Male'
+    },
+    {
+        label: 'Female',
+        value: 'Female'
+    },
+    {
+        label: 'Other',
+        value: 'Other'
+    }
+];
+export const optionRole = [
+    {
+        label: 'Admin',
+        value: 'ROLE_ADMIN'
+    },
+    {
+        label: 'user',
+        value: 'ROLE_USER'
+    }
+];

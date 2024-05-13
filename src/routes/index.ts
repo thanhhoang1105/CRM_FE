@@ -6,6 +6,7 @@ import pathnames from '@/pathnames';
 import boardManagementRoute from './board-management';
 import contactManagementRoute from './contact-management';
 import opportunityManagementRoute from './opportunity-management';
+import userManagementRoute from './user-management';
 
 export interface IRoute {
     name: string;
@@ -36,6 +37,14 @@ const notFoundRoute: IRoute = {
     element: NotFoundPage
 };
 
-const routes: IRoute[] = [homeRoute, ...boardManagementRoute, ...opportunityManagementRoute, ...contactManagementRoute, notFoundRoute, loginRoute];
+const routes: IRoute[] = [
+    homeRoute,
+    ...boardManagementRoute,
+    ...opportunityManagementRoute,
+    ...contactManagementRoute,
+    ...userManagementRoute,
+    notFoundRoute,
+    loginRoute
+];
 
 export default routes;

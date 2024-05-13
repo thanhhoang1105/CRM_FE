@@ -29,7 +29,6 @@ const OpportunityManagement = () => {
     const [isReload, setIsReload] = useState<number>(0);
 
     //#region render table
-
     // định nghĩa các cột sẽ render ra Table
     const columnOpportunity: ColumnsType<IOpportunities> = [
         {

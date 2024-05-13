@@ -14,7 +14,7 @@ import { useEffect, useState } from 'react';
 import dayjs from 'dayjs';
 import { useAppDispatch } from '@/redux/store';
 import { notificationActions } from '@/redux/notification-slice';
-import { TIME_FORMAT } from '@/utils/constants';
+import { optionGenders, TIME_FORMAT } from '@/utils/constants';
 
 export interface IContactInBoardEditProps {
     id: string;
@@ -27,7 +27,7 @@ const ContactEdit = (props: IContactInBoardEditProps) => {
 
     const [dataContacts, setDataContacts] = useState<IContacts[]>([]);
     const [dataEditContacts, setDataEditContacts] = useState<IContacts>();
-    const [isShowModalAdd, setIsShowModal] = useState<boolean>(false);
+    const [isShowModal, setIsShowModal] = useState<boolean>(false);
     const [isReload, setIsReload] = useState<number>(0);
 
     //#region render table contact
@@ -69,21 +69,6 @@ const ContactEdit = (props: IContactInBoardEditProps) => {
                     ]}
                 />
             )
-        }
-    ];
-
-    const optionGenders = [
-        {
-            label: 'Male',
-            value: 'Male'
-        },
-        {
-            label: 'Female',
-            value: 'Female'
-        },
-        {
-            label: 'Other',
-            value: 'Other'
         }
     ];
 
@@ -210,7 +195,7 @@ const ContactEdit = (props: IContactInBoardEditProps) => {
             <DialogHaveField
                 form={formAddContact}
                 title={dataEditContacts ? 'Edit contacts' : 'Add contact'}
-                isShow={isShowModalAdd}
+                isShow={isShowModal}
                 onCancel={handleCancelSubmitAddContact}
                 data={fieldAddContacts}
                 handleSubmit={handleSubmit}

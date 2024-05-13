@@ -11,7 +11,7 @@ export interface IListAllUser {
     birthday: string;
     gender: string;
     username: string;
-    roles: string[];
+    role: string[];
     avatar: IAvatar;
 }
 
@@ -22,6 +22,16 @@ const UsersService = {
     getListAllUser: (): Promise<IListAllUser[]> => {
         const url = apiURL + '/all';
         return axiosClient.get(url);
+    },
+
+    addNewUser: (params: IListAllUser): Promise<IListAllUser> => {
+        const url = apiURL;
+        return axiosClient.post(url, params);
+    },
+
+    updateUser: (params: IListAllUser): Promise<IListAllUser> => {
+        const url = apiURL + `/${params.id}`;
+        return axiosClient.put(url, params);
     }
 };
 

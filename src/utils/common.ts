@@ -186,7 +186,9 @@ export const statusMapping: { [key: string]: { colorText: string; colorBr: strin
     lost: redStatus,
     won: yellowStatus,
     new: blueStatus,
-    qualified: lightBlueStatus
+    qualified: lightBlueStatus,
+    role_user: greenStatus,
+    role_admin: blueStatus
 };
 
 export const renderWithFallback = (data: ReactNode, fallback: string = '-') => (data !== '' && data !== null && data !== undefined ? data : fallback);
