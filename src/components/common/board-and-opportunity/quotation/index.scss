@@ -1,0 +1,41 @@
+.form-send-mail-quotation {
+    .form-send-mail-item {
+        margin: 10px 0;
+
+        .ant-form-item-label {
+            width: 90px !important;
+            display: flex;
+            align-items: center;
+        }
+
+        .ant-form-item-control {
+            textarea {
+                min-height: 250px;
+            }
+        }
+    }
+
+    .ant-row {
+        &:nth-child(6) {
+            .ant-col:first-child {
+                .form-send-mail-item {
+                    .ant-form-item-label {
+                        width: 150px !important;
+                    }
+                }
+            }
+        }
+    }
+
+    .form-send-mail-item-switch {
+        margin: 20px 0 10px 0;
+
+        .ant-form-item-label {
+            flex: 2;
+        }
+
+        .ant-form-item-control {
+            flex: 8;
+        }
+    }
+}

@@ -52,7 +52,7 @@ axiosClient.interceptors.response.use(
         const response = { ...error.response.data, status: status };
 
         // Unauthorized
-        if (status === 401) return handleExpiredToken();
+        // if (status === 401) return handleExpiredToken();
         return response;
     }
 );

@@ -12,10 +12,11 @@ interface IDialogAddCommonProps<T> {
     data: T[];
     handleSubmit: (data: any) => void;
     renderColumn?: number;
+    buttonRight?: string;
 }
 
 const DialogHaveField = <T extends Record<string, any>>(props: IDialogAddCommonProps<T>) => {
-    const { form, name, title, isShow, onCancel, handleSubmit, data, renderColumn = 4, ...otherProps } = props;
+    const { form, name, title, isShow, onCancel, handleSubmit, data, buttonRight, renderColumn = 4, ...otherProps } = props;
 
     // Submit form reset field
     const onFinish = (values: any) => {
@@ -68,7 +69,7 @@ const DialogHaveField = <T extends Record<string, any>>(props: IDialogAddCommonP
                         Cancel
                     </Button>
                     <Button type="primary" htmlType="submit" className="btn btn--submit">
-                        Save
+                        {buttonRight || 'Save'}
                     </Button>
                 </Flex>
             </Form>
@@ -78,7 +79,7 @@ const DialogHaveField = <T extends Record<string, any>>(props: IDialogAddCommonP
     return (
         <DialogDefault
             title={title}
-            isShow={isShow}
+            open={isShow}
             onCancel={handleCancel}
             content={renderContent()}
             className="dialog-information w-auto"

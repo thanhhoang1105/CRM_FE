@@ -19,6 +19,9 @@ import { IField, IInfoSection, IOption } from '@/types/common';
 import { ButtonProps, Form, Input, Rate, Select, Switch } from 'antd';
 import { useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
+import SendMail from './send-mail';
+import Quotation from './quotation';
+import SendMailService from '@/services/send-mail';
 
 export interface IBoardAndOpportunityProps {
     title: string;
@@ -31,6 +34,7 @@ const BoardAndOpportunity = (props: IBoardAndOpportunityProps) => {
     const navigation = useNavigate();
     const [form] = Form.useForm();
     const [formEditSalesperson] = Form.useForm();
+    const [formSendMail] = Form.useForm();
     const dispatch = useAppDispatch();
     const currentUser = useAppSelector(selectAuth).currentUser;
 
@@ -41,6 +45,8 @@ const BoardAndOpportunity = (props: IBoardAndOpportunityProps) => {
     const [dataListUser, setDataListUser] = useState<IListAllUser[]>([]);
     const [showNoteLost, setShowNoteLost] = useState<boolean>(false);
     const [isShowModalEditSalesperson, setIsShowModalEditSalesperson] = useState<boolean>(false);
+    const [isShowModalSendMail, setIsShowModalSendMail] = useState<boolean>(false);
+    const [isShowModalQuotation, setIsShowModalQuotation] = useState<boolean>(false);
     const [isReload, setIsReload] = useState<number>(0);
 
     //#region Edit salesperson
@@ -99,7 +105,11 @@ const BoardAndOpportunity = (props: IBoardAndOpportunityProps) => {
 
     const buttons: ButtonProps[] = [
         {
-            onClick: () => console.log('edit'),
+            onClick: () => setIsShowModalQuotation(true),
+            children: 'New quotation'
+        },
+        {
+            onClick: () => setIsShowModalSendMail(true),
             children: 'Send mail'
         },
         {
@@ -223,6 +233,45 @@ const BoardAndOpportunity = (props: IBoardAndOpportunityProps) => {
     ];
     //#endregion
 
+    //#region send mail
+    const onSubmitSendMail = async () => {
+        const dataForm = formSendMail.getFieldsValue();
+        const dataFormatted = {
+            ...dataForm,
+            loadTemplate: undefined,
+            message: 'string',
+            attachment: 'string',
+            expiration: '2024-05-13',
+            product: 'string',
+            price: 0,
+            tax: 0,
+            condition: 'string',
+            vat: 0,
+            total: 0
+        };
+
+        try {
+            if (dataForm.loadTemplate) {
+                const res = await SendMailService.sendMailWithTemplate(id, dataFormatted);
+                if (res) {
+                    dispatch(notificationActions.setNotification({ type: 'success', message: 'Send mail successfully' }));
+                    setIsShowModalSendMail(false);
+                }
+
+                return;
+            }
+
+            const res = await SendMailService.sendMail({ ...dataForm, loadTemplate: undefined });
+            if (res) {
+                dispatch(notificationActions.setNotification({ type: 'success', message: 'Send mail successfully' }));
+                setIsShowModalSendMail(false);
+            }
+        } catch (error) {
+            console.error('API error: SendMail', error);
+        }
+    };
+    //#endregion
+
     // call API
     useEffect(() => {
         const getDataDetail = async () => {
@@ -282,6 +331,10 @@ const BoardAndOpportunity = (props: IBoardAndOpportunityProps) => {
                 data={fieldEditSalesperson}
                 handleSubmit={handleSubmitSalesperson}
             />
+
+            <SendMail form={formSendMail} onSubmit={onSubmitSendMail} open={isShowModalSendMail} setIsShowModalSendMail={setIsShowModalSendMail} />
+
+            <Quotation data={form} id={id} open={isShowModalQuotation} setIsShowModalQuotation={setIsShowModalQuotation} />
         </DetailContent>
     );
 };
