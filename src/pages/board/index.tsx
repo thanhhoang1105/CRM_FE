@@ -4,6 +4,9 @@ import { notificationActions } from '@/redux/notification-slice';
 import { useAppDispatch } from '@/redux/store';
 import OpportunitiesService, { IOpportunities } from '@/services/opportunities';
 import StageService, { IStage } from '@/services/stages';
+import { mappingPriority } from '@/utils/common';
+import { ClockCircleOutlined } from '@ant-design/icons';
+import { Avatar, Flex, Rate } from 'antd';
 import { useEffect, useState } from 'react';
 import { DragDropContext, Draggable, Droppable, DropResult } from 'react-beautiful-dnd';
 import { useNavigate } from 'react-router-dom';
@@ -94,14 +97,16 @@ const BoardManagement = () => {
             <DragDropContext onDragEnd={handleDragEnd}>
                 <div style={{ display: 'flex', width: '100%' }}>
                     {Object.entries(columns).map(([columnId, tasks]) => (
-                        <div key={columnId} style={{ flex: 1, margin: 8 }}>
-                            <h2>{dataStages.find(stage => stage.id === columnId)?.name}</h2>
+                        <div key={columnId} style={{ flex: 1, margin: 8, maxHeight: '80vh', overflow: 'auto' }}>
+                            <h2 style={{ position: 'sticky', top: 0, backgroundColor: '#fff', zIndex: 1 }}>
+                                {dataStages.find(stage => stage.id === columnId)?.name}
+                            </h2>
                             <Droppable droppableId={columnId}>
                                 {(provided: any) => (
                                     <div
                                         ref={provided.innerRef}
                                         {...provided.droppableProps}
-                                        style={{ background: 'lightgrey', padding: 4, minWidth: 250, minHeight: 500 }}
+                                        style={{ background: 'lightgrey', padding: 4, minWidth: 250, minHeight: 500, height: '100%' }}
                                     >
                                         {tasks.map((task, index) => (
                                             <Draggable key={task.id} draggableId={task.id} index={index}>
@@ -119,7 +124,32 @@ const BoardManagement = () => {
                                                         }}
                                                         onClick={() => navigation(pathnames.boardManagement.edit.path + `/${task.id}`)}
                                                     >
-                                                        {task.company}
+                                                        <Flex vertical gap={20}>
+                                                            <Flex justify="space-between" gap={20}>
+                                                                <div>{task.company}</div>
+                                                                <div>
+                                                                    <ClockCircleOutlined />
+                                                                </div>
+                                                            </Flex>
+                                                            <Flex justify="space-between" gap={20}>
+                                                                <Rate
+                                                                    count={3}
+                                                                    value={mappingPriority[task.priority]}
+                                                                    className="checkbox-container"
+                                                                    style={{ pointerEvents: 'none' }}
+                                                                />
+
+                                                                {task.salesperson && (
+                                                                    <Avatar
+                                                                        style={{ backgroundColor: '#f56a00', verticalAlign: 'middle', fontSize: 10 }}
+                                                                        size={20}
+                                                                        gap={20}
+                                                                    >
+                                                                        {task.salesperson?.fullname.charAt(0)}
+                                                                    </Avatar>
+                                                                )}
+                                                            </Flex>
+                                                        </Flex>
                                                     </div>
                                                 )}
                                             </Draggable>

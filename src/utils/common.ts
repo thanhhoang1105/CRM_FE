@@ -55,4 +55,10 @@ export const statusMapping: { [key: string]: { colorText: string; colorBr: strin
     role_admin: blueStatus
 };
 
+export const mappingPriority: { [key: string]: number } = {
+    VERY_HIGH: 3,
+    HIGH: 2,
+    MEDIUM: 1
+};
+
 export const renderWithFallback = (data: ReactNode, fallback: string = '-') => (data !== '' && data !== null && data !== undefined ? data : fallback);

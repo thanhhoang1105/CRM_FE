@@ -22,6 +22,7 @@ import { useNavigate, useParams } from 'react-router-dom';
 import SendMail from './send-mail';
 import Quotation from './quotation';
 import SendMailService from '@/services/send-mail';
+import { mappingPriority } from '@/utils/common';
 
 export interface IBoardAndOpportunityProps {
     title: string;
@@ -296,12 +297,6 @@ const BoardAndOpportunity = (props: IBoardAndOpportunityProps) => {
     // đưa dữ liệu ban đầu vào form để data được đổ vào cái field
     useEffect(() => {
         if (dataEdit) {
-            const mappingPriority: { [key: string]: number } = {
-                VERY_HIGH: 3,
-                HIGH: 2,
-                MEDIUM: 1
-            };
-
             const priorityValue = mappingPriority[dataEdit.priority];
             form.setFieldsValue({
                 ...dataEdit,
