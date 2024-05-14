@@ -12,6 +12,13 @@ export interface IContacts {
     jobPosition: string;
 }
 
+export interface IContactByOpportunitiesId {
+    totalItems: number;
+    totalPages: number;
+    currentPage: number;
+    contacts: IContacts[];
+}
+
 const apiURL = '/contacts';
 
 const ContactsService = {
@@ -20,7 +27,7 @@ const ContactsService = {
         return axiosClient.get(url);
     },
     // gọi API lấy ra dữ liệu chi tiết của contact theo opportunities id
-    getListContactsByOpportunitiesId: (id: string): Promise<IContacts[]> => {
+    getListContactsByOpportunitiesId: (id: string): Promise<IContactByOpportunitiesId> => {
         const url = apiURL + `/opportunity/${id}`;
         return axiosClient.get(url);
     },

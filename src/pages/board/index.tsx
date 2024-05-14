@@ -92,9 +92,9 @@ const BoardManagement = () => {
     return (
         <DetailContent>
             <DragDropContext onDragEnd={handleDragEnd}>
-                <div style={{ display: 'flex' }}>
+                <div style={{ display: 'flex', width: '100%' }}>
                     {Object.entries(columns).map(([columnId, tasks]) => (
-                        <div key={columnId} style={{ margin: 8 }}>
+                        <div key={columnId} style={{ flex: 1, margin: 8 }}>
                             <h2>{dataStages.find(stage => stage.id === columnId)?.name}</h2>
                             <Droppable droppableId={columnId}>
                                 {(provided: any) => (

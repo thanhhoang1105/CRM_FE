@@ -174,7 +174,7 @@ const ContactEdit = (props: IContactInBoardEditProps) => {
     useEffect(() => {
         const getDataDetail = async () => {
             const [contactsRes] = await Promise.all([ContactsService.getListContactsByOpportunitiesId(id)]);
-            setDataContacts(contactsRes);
+            setDataContacts(contactsRes.contacts);
         };
         getDataDetail();
     }, [id, isReload]);

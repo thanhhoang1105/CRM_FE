@@ -21,10 +21,10 @@ export const optionGenders = [
 export const optionRole = [
     {
         label: 'Admin',
-        value: 'ROLE_ADMIN'
+        value: 1
     },
     {
         label: 'user',
-        value: 'ROLE_USER'
+        value: 0
     }
 ];

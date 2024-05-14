@@ -48,6 +48,7 @@ const BoardAndOpportunity = (props: IBoardAndOpportunityProps) => {
     const [isShowModalSendMail, setIsShowModalSendMail] = useState<boolean>(false);
     const [isShowModalQuotation, setIsShowModalQuotation] = useState<boolean>(false);
     const [isReload, setIsReload] = useState<number>(0);
+    const [reloadDataInit, setReloadDataInit] = useState<number>(0);
 
     //#region Edit salesperson
     const fieldEditSalesperson: IField[] = [
@@ -105,7 +106,10 @@ const BoardAndOpportunity = (props: IBoardAndOpportunityProps) => {
 
     const buttons: ButtonProps[] = [
         {
-            onClick: () => setIsShowModalQuotation(true),
+            onClick: () => {
+                setIsShowModalQuotation(true);
+                setReloadDataInit(reloadDataInit + 1);
+            },
             children: 'New quotation'
         },
         {
@@ -332,9 +336,21 @@ const BoardAndOpportunity = (props: IBoardAndOpportunityProps) => {
                 handleSubmit={handleSubmitSalesperson}
             />
 
-            <SendMail form={formSendMail} onSubmit={onSubmitSendMail} open={isShowModalSendMail} setIsShowModalSendMail={setIsShowModalSendMail} />
+            <SendMail
+                form={formSendMail}
+                name="form_send_mail_opportunity"
+                onSubmit={onSubmitSendMail}
+                open={isShowModalSendMail}
+                setIsShowModalSendMail={setIsShowModalSendMail}
+            />
 
-            <Quotation data={form} id={id} open={isShowModalQuotation} setIsShowModalQuotation={setIsShowModalQuotation} />
+            <Quotation
+                data={form}
+                id={id}
+                open={isShowModalQuotation}
+                setIsShowModalQuotation={setIsShowModalQuotation}
+                reloadDataInit={reloadDataInit}
+            />
         </DetailContent>
     );
 };

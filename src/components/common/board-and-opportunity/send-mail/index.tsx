@@ -8,14 +8,16 @@ import './index.scss';
 export interface ISendMailProps extends ModalProps {
     setIsShowModalSendMail: Dispatch<SetStateAction<boolean>>;
     form: FormInstance;
+    name: string;
     onSubmit: (value: any) => void;
+    loadTemplate?: boolean;
 }
 const SendMail = (props: ISendMailProps) => {
-    const { form, open, onSubmit, setIsShowModalSendMail } = props;
+    const { form, open, name, onSubmit, setIsShowModalSendMail, loadTemplate = true } = props;
 
     const renderContent = () => {
         return (
-            <Form form={form} name="form_send_mail" onFinish={onSubmit} requiredMark={RequiredMark} className="form-send-mail">
+            <Form form={form} name={name} onFinish={onSubmit} requiredMark={RequiredMark} className="form-send-mail">
                 <Form.Item
                     label="Recipient"
                     name="recipient"
@@ -36,14 +38,15 @@ const SendMail = (props: ISendMailProps) => {
                 <Form.Item name="message" className="form-send-mail-item">
                     <Input.TextArea className="text-area-item" />
                 </Form.Item>
-
-                <Form.Item label="Load code email template" name="loadTemplate" className="form-send-mail-item-switch" valuePropName="checked">
-                    <Switch />
-                </Form.Item>
+                {loadTemplate && (
+                    <Form.Item label="Load code email template" name="loadTemplate" className="form-send-mail-item-switch" valuePropName="checked">
+                        <Switch />
+                    </Form.Item>
+                )}
 
                 <BaseDivider margin="0 0 16px 0" />
                 <Flex justify="center" align="center" gap={16}>
-                    <Button type="default" onClick={() => setIsShowModalSendMail(false)} className="btn">
+                    <Button type="default" onClick={onCloseModal} className="btn">
                         Cancel
                     </Button>
                     <Button type="primary" htmlType="submit" className="btn btn--submit">
@@ -56,6 +59,7 @@ const SendMail = (props: ISendMailProps) => {
 
     const onCloseModal = () => {
         setIsShowModalSendMail(false);
+        form.resetFields();
     };
 
     return (

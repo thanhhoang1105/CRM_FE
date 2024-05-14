@@ -18,7 +18,7 @@ import dayjs from 'dayjs';
 import { useEffect, useState } from 'react';
 
 const UserManagement = () => {
-    const [formAddUser] = Form.useForm();
+    const [formUser] = Form.useForm();
     const dispatch = useAppDispatch();
 
     const [dataUsers, setDataUsers] = useState<IListAllUser[]>([]);
@@ -27,10 +27,14 @@ const UserManagement = () => {
     const [isReload, setIsReload] = useState<number>(0);
 
     //#region render table
-    const handleEditUser = (dataEdit: IListAllUser) => {
-        console.log('dataEdit', dataEdit);
+    const handleEditUser = (dataEdit: any) => {
         setIsShowModal(true);
         setDataEditUser(dataEdit);
+        formUser.setFieldsValue({
+            ...dataEdit,
+            birthday: dayjs(dataEdit.birthday, TIME_FORMAT.DATE),
+            roles: dataEdit.roles[0] === 'ROLE_USER' ? 0 : 1
+        });
     };
     const columnUser: ColumnsType<IListAllUser> = [
         {
@@ -143,7 +147,7 @@ const UserManagement = () => {
             validation: [{ required: true, message: 'Please enter the valid value' }]
         },
         {
-            name: 'role',
+            name: 'roles',
             label: 'Role',
             value: <BaseSelect options={optionRole} placeholder="Select gender" />,
             validation: [{ required: true, message: 'Please enter the valid value' }]
@@ -151,7 +155,7 @@ const UserManagement = () => {
     ];
 
     const handleSubmitAddUser = async () => {
-        const dataForm = formAddUser.getFieldsValue();
+        const dataForm = formUser.getFieldsValue();
         const dataFormatted = { ...dataForm, role: [dataForm.role] };
         try {
             const res = await UsersService.addNewUser(dataFormatted);
@@ -166,8 +170,10 @@ const UserManagement = () => {
     };
 
     const handleSubmitEditUser = async () => {
-        const dataForm = formAddUser.getFieldsValue();
-        const dataFormatted = { ...dataForm, role: [dataForm.role], id: dataEditUser?.id };
+        const dataForm = formUser.getFieldsValue();
+
+        const dataFormatted = { ...dataForm, id: dataEditUser?.id, role: dataForm.roles === 0 ? ['ROLE_USER'] : ['ROLE_ADMIN'], roles: undefined };
+        console.log('dataFormatted', dataFormatted);
         try {
             const res = await UsersService.updateUser(dataFormatted);
             if (res) {
@@ -215,7 +221,7 @@ const UserManagement = () => {
 
             {/* Dialog add */}
             <DialogHaveField
-                form={formAddUser}
+                form={formUser}
                 title={dataEditUser ? 'Edit user' : 'Add user'}
                 isShow={isShowModal}
                 onCancel={handleCancelSubmitAddUser}
