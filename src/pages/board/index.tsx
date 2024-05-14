@@ -128,10 +128,10 @@ const BoardManagement = () => {
                                                             <Flex justify="space-between" gap={20}>
                                                                 <div>{task.company}</div>
                                                                 <div>
-                                                                    <ClockCircleOutlined />
+                                                                    <ClockCircleOutlined style={{ fontSize: 20 }} />
                                                                 </div>
                                                             </Flex>
-                                                            <Flex justify="space-between" gap={20}>
+                                                            <Flex justify="space-between" align="center" gap={20}>
                                                                 <Rate
                                                                     count={3}
                                                                     value={mappingPriority[task.priority]}
