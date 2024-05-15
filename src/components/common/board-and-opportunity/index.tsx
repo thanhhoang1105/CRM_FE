@@ -38,7 +38,6 @@ const BoardAndOpportunity = (props: IBoardAndOpportunityProps) => {
     const [formSendMail] = Form.useForm();
     const dispatch = useAppDispatch();
     const currentUser = useAppSelector(selectAuth).currentUser;
-
     const roleAdmin = currentUser?.user.roles[0].includes('ROLE_ADMIN');
 
     const [dataEdit, setDataEdit] = useState<IOpportunities>();
@@ -56,7 +55,12 @@ const BoardAndOpportunity = (props: IBoardAndOpportunityProps) => {
         {
             name: 'salespersonId',
             label: 'User',
-            value: <BaseSelect options={dataListUser.map(item => ({ label: item.fullname, value: item.id }))} placeholder="Select user" />,
+            value: (
+                <BaseSelect
+                    options={roleAdmin ? dataListUser?.map(item => ({ label: item.fullname, value: item.id })) : []}
+                    placeholder="Select user"
+                />
+            ),
             validation: [{ required: true, message: 'Please enter the valid value' }]
         }
     ];
@@ -280,15 +284,15 @@ const BoardAndOpportunity = (props: IBoardAndOpportunityProps) => {
     // call API
     useEffect(() => {
         const getDataDetail = async () => {
-            const [stagesRes, opportunitiesDetailRes, listUserRes] = await Promise.all([
-                StageService.getStage(),
-                OpportunitiesService.getOpportunityDetail(id),
-                UsersService.getListAllUser()
-            ]);
+            const [stagesRes, opportunitiesDetailRes] = await Promise.all([StageService.getStage(), OpportunitiesService.getOpportunityDetail(id)]);
 
             setDataEdit(opportunitiesDetailRes);
             setDataStages(stagesRes);
-            setDataListUser(listUserRes);
+
+            if (roleAdmin) {
+                const listUserRes = await UsersService.getListAllUser();
+                setDataListUser(listUserRes);
+            }
         };
 
         getDataDetail();

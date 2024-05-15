@@ -27,6 +27,7 @@ const DefaultLayout = (props: DefaultLayoutProps) => {
     const { children } = props;
 
     const currentUser = useAppSelector(selectAuth).currentUser;
+    const roleAdmin = currentUser?.user.roles[0].includes('ROLE_ADMIN');
     const dispatch = useAppDispatch();
 
     const handleLogout = () => {
@@ -100,8 +101,14 @@ const DefaultLayout = (props: DefaultLayoutProps) => {
             key: id.toString(),
             label: (
                 <>
-                    <Link to={menu.url || ''}>{menu.label}</Link>
-                    {menu.children && dropdownIcon}
+                    {!roleAdmin && menu.label === 'User' ? (
+                        <div>{menu.label}</div>
+                    ) : (
+                        <>
+                            <Link to={menu.url || ''}>{menu.label}</Link>
+                            {menu.children && dropdownIcon}
+                        </>
+                    )}
                 </>
             ),
             className: menuItemClassName,
@@ -127,8 +134,10 @@ const DefaultLayout = (props: DefaultLayoutProps) => {
                 </div>
                 <Dropdown menu={userMenu} trigger={['click']}>
                     <Button type="text" className="header-user">
-                        <Avatar src={currentUser?.employeeImageUrl} size={36} />
-                        <div>{currentUser?.firstName}</div>
+                        <Avatar size={36} style={{ backgroundColor: '#f56a00', display: 'flex', alignItems: 'center' }}>
+                            {currentUser?.user.fullname.charAt(0)}
+                        </Avatar>
+                        <div>{currentUser?.user.fullname}</div>
                         {dropdownIcon}
                     </Button>
                 </Dropdown>
