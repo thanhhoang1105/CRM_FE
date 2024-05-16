@@ -207,7 +207,7 @@ const OpportunityManagement = () => {
                 columns={columnOpportunity}
                 handleAdd={() => setIsShowModal(true)}
                 moreButton={buttons}
-                tableScroll={dataOpportunities.length > 10 ? { x: 'max-content', y: 412 } : { x: 'max-content' }}
+                tableScroll={dataOpportunities.length > 10 ? { x: 'max-content', y: 441 } : { x: 'max-content' }}
             />
 
             {/* Dialog add */}

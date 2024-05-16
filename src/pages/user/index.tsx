@@ -208,7 +208,7 @@ const UserManagement = () => {
                 dataSource={formatDataTable(dataUsers)}
                 columns={columnUser}
                 handleAdd={() => setIsShowModal(true)}
-                tableScroll={dataUsers.length > 10 ? { x: 'max-content', y: 412 } : { x: 'max-content' }}
+                tableScroll={dataUsers.length > 10 ? { x: 'max-content', y: 417 } : { x: 'max-content' }}
             />
 
             {/* Dialog add */}

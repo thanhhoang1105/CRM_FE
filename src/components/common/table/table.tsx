@@ -14,7 +14,7 @@ const BaseTable = <T extends AnyObject>(props: IBaseTableProps<T>) => {
     const totalItems = props.dataSource?.length;
 
     // Scroll
-    const scrollDefault = props.dataSource && props.dataSource.length < 10 ? { x: 'max-content' } : { x: 'max-content', y: 400 };
+    const scrollDefault = props.dataSource && props.dataSource.length < 10 ? { x: 'max-content' } : { x: 'max-content', y: 417 };
 
     const scroll = scrollProp ?? scrollDefault;
 
