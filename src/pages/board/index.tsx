@@ -98,9 +98,14 @@ const BoardManagement = () => {
                 <div style={{ display: 'flex', width: '100%' }}>
                     {Object.entries(columns).map(([columnId, tasks]) => (
                         <div key={columnId} style={{ flex: 1, margin: 8, maxHeight: '80vh', overflow: 'auto' }}>
-                            <h2 style={{ position: 'sticky', top: 0, backgroundColor: '#fff', zIndex: 1 }}>
-                                {dataStages.find(stage => stage.id === columnId)?.name}
-                            </h2>
+                            <Flex justify="space-between" align="center" style={{ position: 'sticky', top: 0, backgroundColor: '#fff', zIndex: 1 }}>
+                                <h2>{dataStages.find(stage => stage.id === columnId)?.name}</h2>
+                                <h3>
+                                    {dataStages
+                                        .find(stage => stage.id === columnId)
+                                        ?.revenue.toLocaleString('it-IT', { style: 'currency', currency: 'VND' })}
+                                </h3>
+                            </Flex>
                             <Droppable droppableId={columnId}>
                                 {(provided: any) => (
                                     <div
