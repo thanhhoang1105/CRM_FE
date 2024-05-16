@@ -161,7 +161,7 @@ const Quotation = (props: ISendMailProps) => {
                 onCancel={handleCancelSubmitAddContact}
                 data={fieldQuotation}
                 handleSubmit={handleSubmit}
-                buttonRight="Sent via email"
+                buttonRight="Send via email"
             />
 
             <SendMail

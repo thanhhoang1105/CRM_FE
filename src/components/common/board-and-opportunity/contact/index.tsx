@@ -18,10 +18,11 @@ import { optionGenders, TIME_FORMAT } from '@/utils/constants';
 
 export interface IContactInBoardEditProps {
     id: string;
+    isReloadPage: number;
 }
 
 const ContactEdit = (props: IContactInBoardEditProps) => {
-    const { id } = props;
+    const { id, isReloadPage } = props;
     const [formAddContact] = Form.useForm();
     const dispatch = useAppDispatch();
 
@@ -76,50 +77,37 @@ const ContactEdit = (props: IContactInBoardEditProps) => {
         {
             name: 'firstname',
             label: 'First name',
-            value: <Input placeholder="Enter first name" />,
-            validation: [{ required: true, message: 'Please enter the valid value' }]
+            value: <Input placeholder="Enter first name" />
         },
         {
             name: 'lastname',
             label: 'Last name',
-            value: <Input placeholder="Enter last name" />,
-            validation: [{ required: true, message: 'Please enter the valid value' }]
-        },
-        {
-            name: 'fullname',
-            label: 'Full name',
-            value: <Input placeholder="Enter full name" />,
-            validation: [{ required: true, message: 'Please enter the valid value' }]
+            value: <Input placeholder="Enter last name" />
         },
         {
             name: 'email',
             label: 'Email',
-            value: <Input placeholder="Enter email" />,
-            validation: [{ required: true, message: 'Please enter the valid value' }]
+            value: <Input placeholder="Enter email" />
         },
         {
             name: 'phone',
             label: 'Phone',
-            value: <Input placeholder="Enter phone" />,
-            validation: [{ required: true, message: 'Please enter the valid value' }]
+            value: <Input placeholder="Enter phone" />
         },
         {
             name: 'birthday',
             label: 'Birthday',
-            value: <BaseDatePicker placeholder="dd/mm/yyyy" allowClear />,
-            validation: [{ required: true, message: 'Please enter the valid value' }]
+            value: <BaseDatePicker placeholder="dd/mm/yyyy" allowClear />
         },
         {
             name: 'gender',
             label: 'Gender',
-            value: <BaseSelect options={optionGenders} placeholder="Select gender" />,
-            validation: [{ required: true, message: 'Please enter the valid value' }]
+            value: <BaseSelect options={optionGenders} placeholder="Select gender" />
         },
         {
             name: 'jobPosition',
             label: 'Job position',
-            value: <Input placeholder="Enter job position" />,
-            validation: [{ required: true, message: 'Please enter the valid value' }]
+            value: <Input placeholder="Enter job position" />
         }
     ];
 
@@ -177,7 +165,7 @@ const ContactEdit = (props: IContactInBoardEditProps) => {
             setDataContacts(contactsRes.contacts);
         };
         getDataDetail();
-    }, [id, isReload]);
+    }, [id, isReload, isReloadPage]);
 
     return (
         <>

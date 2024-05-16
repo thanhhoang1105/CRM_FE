@@ -18,10 +18,12 @@ import { useEffect, useState } from 'react';
 
 export interface IScheduleInBoardEditProps {
     id: string;
+    isReloadPage: number;
+    setReloadPage: (value: number) => void;
 }
 
 const ScheduleEdit = (props: IScheduleInBoardEditProps) => {
-    const { id } = props;
+    const { id, isReloadPage, setReloadPage } = props;
     const [formAddActivities] = Form.useForm();
     const dispatch = useAppDispatch();
 
@@ -116,7 +118,8 @@ const ScheduleEdit = (props: IScheduleInBoardEditProps) => {
             name: 'summary',
             label: 'Summary',
             value: <Input.TextArea placeholder="Enter summary" className="text-area-item" />,
-            colSpan: 24
+            colSpan: 24,
+            validation: [{ required: true, message: 'Please enter the valid value' }]
         }
     ];
 
@@ -130,6 +133,8 @@ const ScheduleEdit = (props: IScheduleInBoardEditProps) => {
                 setIsShowModal(false);
                 dispatch(notificationActions.setNotification({ type: 'success', message: 'Add activities successfully' }));
                 setIsReload(isReload + 1);
+                setReloadPage(isReloadPage + 1);
+                setDataEditActivities(undefined);
             }
         } catch (error) {
             console.error('API error: handleSubmitAddActivities', error);
@@ -146,6 +151,8 @@ const ScheduleEdit = (props: IScheduleInBoardEditProps) => {
                 setIsShowModal(false);
                 dispatch(notificationActions.setNotification({ type: 'success', message: 'Update activities successfully' }));
                 setIsReload(isReload + 1);
+                setReloadPage(isReloadPage + 1);
+                setDataEditActivities(undefined);
             }
         } catch (error) {
             console.error('API error: handleSubmitEditActivities', error);
@@ -174,7 +181,7 @@ const ScheduleEdit = (props: IScheduleInBoardEditProps) => {
         };
 
         getDataDetail();
-    }, [id, isReload]);
+    }, [id, isReload, isReloadPage]);
 
     return (
         <>

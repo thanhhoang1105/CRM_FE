@@ -26,12 +26,7 @@ const SendMail = (props: ISendMailProps) => {
                 >
                     <Input placeholder="Enter recipient" />
                 </Form.Item>
-                <Form.Item
-                    label="Subject"
-                    name="subject"
-                    className="form-send-mail-item"
-                    rules={[{ required: true, message: 'Please enter the valid value' }]}
-                >
+                <Form.Item label="Subject" name="subject" className="form-send-mail-item">
                     <Input placeholder="Enter subject" />
                 </Form.Item>
 
@@ -39,7 +34,7 @@ const SendMail = (props: ISendMailProps) => {
                     <Input.TextArea className="text-area-item" />
                 </Form.Item>
                 {loadTemplate && (
-                    <Form.Item label="Load code email template" name="loadTemplate" className="form-send-mail-item-switch" valuePropName="checked">
+                    <Form.Item label="Load cold email template" name="loadTemplate" className="form-send-mail-item-switch" valuePropName="checked">
                         <Switch />
                     </Form.Item>
                 )}
@@ -64,7 +59,7 @@ const SendMail = (props: ISendMailProps) => {
 
     return (
         <DialogDefault
-            title="Send mail"
+            title="Send email"
             open={open}
             content={renderContent()}
             onCancel={() => onCloseModal()}

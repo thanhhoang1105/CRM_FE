@@ -4,7 +4,7 @@ const main = {
 };
 
 const edit = {
-    name: 'Board edit',
+    name: 'Opportunity edit',
     path: '/board-edit'
 };
 

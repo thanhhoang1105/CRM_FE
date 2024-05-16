@@ -8,21 +8,20 @@ import DetailInfo from '@/components/common/detail-common/detail-info';
 import DialogHaveField from '@/components/common/dialog/dialog-have-field';
 import RequiredMark from '@/components/common/form/required-mark';
 import BaseSelect from '@/components/common/select';
-import pathnames from '@/pathnames';
 import { selectAuth } from '@/redux/auth-slice';
 import { notificationActions } from '@/redux/notification-slice';
 import { useAppDispatch, useAppSelector } from '@/redux/store';
 import OpportunitiesService, { IOpportunities } from '@/services/opportunities';
+import SendMailService from '@/services/send-mail';
 import StageService, { IStage } from '@/services/stages';
 import UsersService, { IListAllUser } from '@/services/users';
 import { IField, IInfoSection, IOption } from '@/types/common';
+import { mappingPriority } from '@/utils/common';
 import { ButtonProps, Form, Input, Rate, Select, Switch } from 'antd';
 import { useEffect, useState } from 'react';
-import { useNavigate, useParams } from 'react-router-dom';
-import SendMail from './send-mail';
+import { useParams } from 'react-router-dom';
 import Quotation from './quotation';
-import SendMailService from '@/services/send-mail';
-import { mappingPriority } from '@/utils/common';
+import SendMail from './send-mail';
 
 export interface IBoardAndOpportunityProps {
     title: string;
@@ -32,7 +31,6 @@ export interface IBoardAndOpportunityProps {
 const BoardAndOpportunity = (props: IBoardAndOpportunityProps) => {
     const { title, goBack } = props;
     const { id = '' } = useParams();
-    const navigation = useNavigate();
     const [form] = Form.useForm();
     const [formEditSalesperson] = Form.useForm();
     const [formSendMail] = Form.useForm();
@@ -102,7 +100,7 @@ const BoardAndOpportunity = (props: IBoardAndOpportunityProps) => {
             const res = await OpportunitiesService.updateBoard(dataFormatted);
             if (res) {
                 dispatch(notificationActions.setNotification({ type: 'success', message: 'Update board successfully' }));
-                navigation(pathnames.boardManagement.main.path);
+                setIsReload(isReload + 1);
             }
         } catch (error) {
             console.error('API error: handleSubmitSalesperson', error);
@@ -122,7 +120,10 @@ const BoardAndOpportunity = (props: IBoardAndOpportunityProps) => {
             children: 'Send mail'
         },
         {
-            onClick: () => setIsShowModalEditSalesperson(true),
+            onClick: () => {
+                setIsShowModalEditSalesperson(true);
+                formEditSalesperson.setFieldValue('salespersonId', dataEdit?.salesperson.id);
+            },
             children: 'Edit salesperson',
             hidden: !roleAdmin
         },
@@ -209,7 +210,7 @@ const BoardAndOpportunity = (props: IBoardAndOpportunityProps) => {
         {
             name: 'priority',
             label: 'Priority',
-            value: <Rate count={3} tooltips={['MEDIUM', 'HIGHT', 'VERY HIGHT']} className="checkbox-container" />
+            value: <Rate count={3} tooltips={['MEDIUM', 'HIGH', 'VERY HIGH']} className="checkbox-container" />
         },
         {
             name: 'stage',
@@ -320,9 +321,9 @@ const BoardAndOpportunity = (props: IBoardAndOpportunityProps) => {
                 <Form form={form} name="board_detail" layout="vertical" onFinish={handleSaveInfoBoard} requiredMark={RequiredMark}>
                     {renderBoxFormGroup([{ title: 'Information', columns: dataInfo }])}
                 </Form>
-                <ContactEdit id={id} />
-                <ScheduleEdit id={id} />
-                <ActivitiesEdit id={id} />
+                <ContactEdit id={id} isReloadPage={isReload} />
+                <ScheduleEdit id={id} isReloadPage={isReload} setReloadPage={() => setIsReload(isReload + 1)} />
+                <ActivitiesEdit id={id} isReloadPage={isReload} />
             </div>
 
             {/* Dialog edit salesperson */}

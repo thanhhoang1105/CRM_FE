@@ -107,50 +107,42 @@ const UserManagement = () => {
         {
             name: 'firstname',
             label: 'First name',
-            value: <Input placeholder="Enter first name" />,
-            validation: [{ required: true, message: 'Please enter the valid value' }]
+            value: <Input placeholder="Enter first name" />
         },
         {
             name: 'lastname',
             label: 'Last name',
-            value: <Input placeholder="Enter last name" />,
-            validation: [{ required: true, message: 'Please enter the valid value' }]
+            value: <Input placeholder="Enter last name" />
         },
         {
             name: 'email',
             label: 'Email',
-            value: <Input placeholder="Enter email" />,
-            validation: [{ required: true, message: 'Please enter the valid value' }]
+            value: <Input placeholder="Enter email" />
         },
         {
             name: 'phone',
             label: 'Phone',
-            value: <Input placeholder="Enter phone" />,
-            validation: [{ required: true, message: 'Please enter the valid value' }]
+            value: <Input placeholder="Enter phone" />
         },
         {
             name: 'birthday',
             label: 'Birthday',
-            value: <BaseDatePicker placeholder="dd/mm/yyyy" allowClear />,
-            validation: [{ required: true, message: 'Please enter the valid value' }]
+            value: <BaseDatePicker placeholder="dd/mm/yyyy" allowClear />
         },
         {
             name: 'gender',
             label: 'Gender',
-            value: <BaseSelect options={optionGenders} placeholder="Select gender" />,
-            validation: [{ required: true, message: 'Please enter the valid value' }]
+            value: <BaseSelect options={optionGenders} placeholder="Select gender" />
         },
         {
             name: 'username',
             label: 'Username',
-            value: <Input placeholder="Enter username" />,
-            validation: [{ required: true, message: 'Please enter the valid value' }]
+            value: <Input placeholder="Enter username" />
         },
         {
             name: 'roles',
             label: 'Role',
-            value: <BaseSelect options={optionRole} placeholder="Select gender" />,
-            validation: [{ required: true, message: 'Please enter the valid value' }]
+            value: <BaseSelect options={optionRole} placeholder="Select gender" />
         }
     ];
 

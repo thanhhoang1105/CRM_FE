@@ -1,5 +1,5 @@
 import DetailContent from '@/components/common/detail-common/detail-content';
-import DialogImport from '@/components/common/detail-common/dialog-import/dialog-import';
+import DialogImport from '@/components/common/dialog/dialog-import/dialog-import';
 import DialogHaveField from '@/components/common/dialog/dialog-have-field';
 import BaseSelect from '@/components/common/select';
 import ButtonsIcon from '@/components/common/table/buttons-icon';

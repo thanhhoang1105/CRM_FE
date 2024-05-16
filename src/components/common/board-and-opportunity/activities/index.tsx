@@ -9,10 +9,11 @@ import { useEffect, useState } from 'react';
 
 export interface IActivitiesInBoardEditProps {
     id: string;
+    isReloadPage: number;
 }
 
 const ActivitiesEdit = (props: IActivitiesInBoardEditProps) => {
-    const { id } = props;
+    const { id, isReloadPage } = props;
     const [dataActivities, setDataActivities] = useState<ISchedule>();
 
     //#region render table activities
@@ -49,7 +50,7 @@ const ActivitiesEdit = (props: IActivitiesInBoardEditProps) => {
         };
 
         getDataDetail();
-    }, [id]);
+    }, [id, isReloadPage]);
 
     return (
         <DetailInfo title="Activities logs">
